@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://dcq3dt601bxcc"]
+
+[ext_resource type="Script" path="res://Main.gd" id="1_fajm3"]
+[ext_resource type="PackedScene" uid="uid://cf73ib0h2wjjc" path="res://skyscraper.tscn" id="2_412mh"]
+[ext_resource type="Texture2D" uid="uid://m7igtnf622c6" path="res://art/cityBackGround.jpg" id="3_sryg6"]
+[ext_resource type="PackedScene" uid="uid://bba247w0bqtrp" path="res://ground.tscn" id="4_516m4"]
+[ext_resource type="PackedScene" uid="uid://cp4d7e4rscs6g" path="res://plane.tscn" id="4_xm4mn"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_fajm3")
+skyscrapers_scene = ExtResource("2_412mh")
+metadata/_edit_horizontal_guides_ = [-259.0]
+metadata/_edit_vertical_guides_ = [1920.0]
+
+[node name="Background" type="Area2D" parent="."]
+
+[node name="CityBackGround" type="Sprite2D" parent="Background"]
+position = Vector2(863.25, 467)
+scale = Vector2(0.89974, 1.34195)
+texture = ExtResource("3_sryg6")
+
+[node name="CityBackGround2" type="Sprite2D" parent="Background"]
+position = Vector2(2589, 467)
+scale = Vector2(-0.897917, 1.34195)
+texture = ExtResource("3_sryg6")
+
+[node name="CityBackGround3" type="Sprite2D" parent="Background"]
+position = Vector2(4313, 467)
+scale = Vector2(-0.898, 1.342)
+texture = ExtResource("3_sryg6")
+
+[node name="Ground" parent="." instance=ExtResource("4_516m4")]
+z_index = 1
+
+[node name="Plane" parent="." instance=ExtResource("4_xm4mn")]
+position = Vector2(192, 170)
+
+[node name="SkycraperTimer" type="Timer" parent="."]
+wait_time = 1.75
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="SkycraperTimer" to="." method="_on_skycraper_timer_timeout"]

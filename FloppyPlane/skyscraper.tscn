@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://cf73ib0h2wjjc"]
+
+[ext_resource type="Script" path="res://skyscraper.gd" id="1_dolon"]
+[ext_resource type="Texture2D" uid="uid://raqnhlah4y8" path="res://art/skyscraper.png" id="2_tpinv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_orat2"]
+size = Vector2(136, 121)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ljngt"]
+size = Vector2(168.5, 391.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btqu7"]
+size = Vector2(170, 391)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5w4c2"]
+size = Vector2(135, 120)
+
+[node name="Scyscraper" type="Area2D"]
+script = ExtResource("1_dolon")
+
+[node name="Lower" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 1)
+texture = ExtResource("2_tpinv")
+offset = Vector2(0, 380)
+
+[node name="Upper" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 1)
+texture = ExtResource("2_tpinv")
+offset = Vector2(0, -380)
+flip_v = true
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-0.7, 184.5)
+scale = Vector2(0.7, 1)
+shape = SubResource("RectangleShape2D_orat2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.525, 441.25)
+scale = Vector2(0.7, 1)
+shape = SubResource("RectangleShape2D_ljngt")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, -440.5)
+scale = Vector2(0.7, 1)
+shape = SubResource("RectangleShape2D_btqu7")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(-0.35, -184)
+scale = Vector2(0.7, 1)
+shape = SubResource("RectangleShape2D_5w4c2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
