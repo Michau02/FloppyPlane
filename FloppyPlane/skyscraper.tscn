@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cf73ib0h2wjjc"]
+[gd_scene load_steps=8 format=3 uid="uid://cf73ib0h2wjjc"]
 
 [ext_resource type="Script" path="res://skyscraper.gd" id="1_dolon"]
 [ext_resource type="Texture2D" uid="uid://raqnhlah4y8" path="res://art/skyscraper.png" id="2_tpinv"]
@@ -15,7 +15,11 @@ size = Vector2(170, 391)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5w4c2"]
 size = Vector2(135, 120)
 
-[node name="Scyscraper" type="Area2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hthwe"]
+size = Vector2(24.375, 244.5)
+
+[node name="Scyscraper" type="Area2D" groups=["skyscrapers"]]
+scale = Vector2(0.8, 1)
 script = ExtResource("1_dolon")
 
 [node name="Lower" type="Sprite2D" parent="."]
@@ -49,4 +53,13 @@ position = Vector2(-0.35, -184)
 scale = Vector2(0.7, 1)
 shape = SubResource("RectangleShape2D_5w4c2")
 
+[node name="CollisionShape2D5" type="CollisionShape2D" parent="."]
+
+[node name="ScoreArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2(67.8125, -0.25)
+shape = SubResource("RectangleShape2D_hthwe")
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]

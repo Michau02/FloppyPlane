@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cp4d7e4rscs6g"]
+[gd_scene load_steps=10 format=3 uid="uid://cp4d7e4rscs6g"]
 
 [ext_resource type="Texture2D" uid="uid://bh4ynh4exi18f" path="res://art/plane.png" id="1_hbuub"]
 [ext_resource type="Script" path="res://plane.gd" id="1_s0odg"]
+[ext_resource type="AudioStream" uid="uid://ph1k4yknnswt" path="res://audio/explosion.wav" id="3_20q80"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bflpr"]
 radius = 36.0
@@ -57,3 +58,7 @@ shape = SubResource("CapsuleShape2D_5a2mj")
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="."]
 position = Vector2(-59, -45)
 shape = SubResource("SegmentShape2D_evn6w")
+
+[node name="explosion" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_20q80")
+volume_db = 4.685

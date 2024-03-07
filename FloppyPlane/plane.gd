@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 const max_velocity = 600
-const flap_speed = -500
+const flap_speed = -450
 var flying = false
 var falling = false
 const starting_position = Vector2(100, 400) 
@@ -10,7 +10,6 @@ func _ready():
 	reset()
 	
 func reset():
-	falling = false
 	flying = false
 	position = starting_position
 	set_rotation(0)
@@ -30,4 +29,5 @@ func _physics_process(delta):
 		move_and_collide(velocity*delta)
 			
 func flap():
+	$Flap.play()
 	velocity.y = flap_speed

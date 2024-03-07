@@ -25,11 +25,19 @@ func _ready():
 func newGame():
 	game_over = false
 	game_running = false
-	skyscrapers.clear()
-	generate_skyscrapers()
+	$ScoreLabel.text = "SCORE: 0" 
+	$GameOver/RestartButton.hide()
+	if $Plane/explosion.is_playing:
+		$Plane/explosion.stop()
+	$Explosion.hide()
+	$Plane.show()
 	score = 0
 	scroll_ground = 0
 	scroll_background = 0
+	$Background.position.x = 0
+	get_tree().call_group("skyscrapers", "queue_free")
+	skyscrapers.clear()
+	generate_skyscrapers()	
 	$Plane.reset()
 	
 func _input(event):
@@ -63,8 +71,6 @@ func _process(delta):
 		$Background.position.x = -scroll_background
 		for skyscaper in skyscrapers:
 			skyscaper.position.x -= scroll_ground_speed
-		
-
 
 func _on_skycraper_timer_timeout():
 	generate_skyscrapers()
@@ -74,25 +80,49 @@ func generate_skyscrapers():
 	skyscraper.position.x = screen_size.x + skyscraper_delay
 	skyscraper.position.y = (screen_size.y - ground_height) / 2 + randi_range(-skyscraper_range, skyscraper_range)
 	skyscraper.hit.connect(plane_hit)
+	skyscraper.scored.connect(scored)
 	add_child(skyscraper)
 	skyscrapers.append(skyscraper)
 	
 func check_top():
-	if $Plane.position.y < 0:
+	if $Plane.position.y <= 0:
 		$Plane.falling = true	
 		stop_game()
 		
 func stop_game():
+	$GameOver/RestartButton.show()
 	$SkycraperTimer.stop()
 	$Plane.flying = false
 	game_running = false
 	game_over = true		
 
 func plane_hit():
-	$Plane.falling = true
+	$Plane.falling = false
+	$Explosion.position = $Plane.position
+	$Explosion.show()
+	$Plane/explosion.play()
+	get_node("Explosion").play("explosion")
+	$Plane.hide()
 	stop_game()
-
+	await $Explosion.anim_fin
+	
+func scored():
+	score += 1
+	$Scored.play()
+	$ScoreLabel.text = "SCORE: " + str(score)
 
 func _on_ground_hit():
+	$Explosion.position = $Plane.position
 	$Plane.falling = false
+	$Explosion.show()
+	get_node("Explosion").play("explosion")
+	$Plane/explosion.play()
+	$Plane.hide()
 	stop_game()
+	await $Explosion.anim_fin
+
+func _on_game_over_restart():
+	newGame()
+
+func _on_explosion_anim_fin():
+	$Explosion.hide()

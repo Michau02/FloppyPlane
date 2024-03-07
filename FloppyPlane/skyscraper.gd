@@ -1,16 +1,10 @@
 extends Area2D
 
 signal hit
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
+signal scored
 
 func _on_body_entered(body):
 	hit.emit()
+
+func _on_score_area_body_entered(body):
+	scored.emit()
